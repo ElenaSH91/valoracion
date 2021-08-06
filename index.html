@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <title>Puntuación Estrellas</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <h1>¿Cómo evaluarías esta aplicación?</h1>
+      <div id="estrellas">
+        <img src="image/ev_b.png" class="es_vacia" id="es_1">
+        <img src="image/ev_b.png" class="es_vacia" id="es_2">
+        <img src="image/ev_b.png" class="es_vacia" id="es_3">
+        <img src="image/ev_b.png" class="es_vacia" id="es_4">
+        <img src="image/ev_b.png" class="es_vacia" id="es_5">
+      </div>
+      <h2 id="gracias"></h2>
+
+    <script src="js/jquery.js"></script>
+
+    <script>
+      $(document).ready(function(){
+
+        var votos = 0;
+        var sumaEs = 0;
+        var promedio = 0;
+
+        //Primera Estrella
+        $("#es_1").on("mouseover", function(){iluminaEstrella(1)});
+        $("#es_1").on("mouseout", resultado);
+        $("#es_1").on("click", function(){calculo(1)});
+
+        //Segunda Estrella
+        $("#es_2").on("mouseover", function(){iluminaEstrella(2)});
+        $("#es_2").on("mouseout", resultado);
+        $("#es_2").on("click", function(){calculo(2)});
+
+        //Tercera Estrella
+        $("#es_3").on("mouseover", function(){iluminaEstrella(3)});
+        $("#es_3").on("mouseout", resultado);
+        $("#es_3").on("click", function(){calculo(3)});
+
+        //Cuarta Estrella
+        $("#es_4").on("mouseover", function(){iluminaEstrella(4)});
+        $("#es_4").on("mouseout", resultado);
+        $("#es_4").on("click", function(){calculo(4)});
+
+        //Quinta Estrella
+        $("#es_5").on("mouseover", function(){iluminaEstrella(5)});
+        $("#es_5").on("mouseout", resultado);
+        $("#es_5").on("click", function(){calculo(5)});
+
+        //Div Estrellas
+        $("#gracias").on("mouseover", fnBorrar);
+
+    //=====================FUNCIONES===========================//
+
+        function iluminaEstrella(num){
+          $(".es_vacia").attr('src', 'image/ev_b.png');
+          for (i = 1; i <=num; i++) {
+            $("#es_"+i).attr("src","image/ep_b.png");
+          }
+        }
+
+        function resultado(){
+          var prom_entero = parseInt(promedio);
+          var prom_decimal = promedio - prom_entero;
+
+          $(".es_vacia").attr("src","image/ev_b.png");
+          if (votos>0) {
+            promedio = sumaEs / votos;
+          }
+
+          for (i = 1; i <= prom_entero; i++) {
+            $("#es_"+i).attr("src", "image/ec_b.png");
+          }
+
+          if (prom_decimal >= .5) {
+            $("#es_"+i).attr("src", "image/em_b.png");
+          }
+        }
+
+        function calculo(num){
+          sumaEs += num;
+          votos++;
+          resultado();
+          $("#gracias").html("¡Gracias por tu puntuación!");
+          console.log("Total de estrellas: "+sumaEs+".");
+          console.log("Total de votos: "+votos+".");
+          console.log("Promedio: "+promedio+".");
+        }
+
+        function fnBorrar(){
+          $("#gracias").html("");
+        }
+      });
+    </script>
+  </body>
+</html>
